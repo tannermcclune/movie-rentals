@@ -9,9 +9,9 @@ const config = require('config');
 const auth = require('../middleware/Auth');
  
 
-router.get('/me', auth ,async (req, res) => {
+router.get('/', auth ,async (req, res) => {
    const user = await User.findById(req.user._id).select('-password');
-   res.send(user);
+   res.render("users/show");
 });
 
 

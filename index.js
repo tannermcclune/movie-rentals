@@ -40,12 +40,12 @@ router.use(
 
 
 router.use("/", index);
-app.use('/api/genres', genre);
-app.use('/api/members', members);
-app.use('/api/movies', movie);
-app.use('/api/rentals', rental);
-app.use('/api/users', users);
-app.use('/api/login', login);
+router.use('/api/genres', genre);
+router.use('/api/members', members);
+router.use('/api/movies', movie);
+router.use('/api/rentals', rental);
+router.use('/api/users', users);
+router.use('/api/login', login);
 
 app.use("/", router);
 

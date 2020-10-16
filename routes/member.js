@@ -8,7 +8,8 @@ const {validateMember, Member} = require('../module/member');
 
 router.get('/', async (req, res) => {
     const members = await Member.find().sort('name');
-    res.send(members);
+    res.locals.members = members;
+    res.render("members/show");
 });
 
 router.post('/', async (req,res) => {

@@ -9,8 +9,8 @@ const admin = require('../middleware/admin');
 router.get('/', async (req,res) => {
     const genre = await Genre.find().sort('name');
     if (!genre) return res.status(404).send('Genre is not find');
-    
-    res.send(genre);
+    res.locals.genres = genre;
+    res.render("genres/show");
 });
 
 router.post('/', auth, async(req, res) => {

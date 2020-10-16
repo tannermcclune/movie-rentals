@@ -6,7 +6,9 @@ const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
 
-
+router.get("/", async (req, res) => {
+    res.render("login/show");
+})
 
 router.post('/', async (req, res) => {
     const {error} = validate(req.body);

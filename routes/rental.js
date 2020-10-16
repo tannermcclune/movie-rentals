@@ -9,8 +9,9 @@ const {Movie} = require('../module/movie');
 Fawn.init(mongoose);
 
 router.get('/', async(req, res) => {
-    const resoult = await Rental.find().sort('name');
-    res.send(resoult);
+    const result = await Rental.find().sort('name');
+    res.locals.rentals = result;
+    res.render("rentals/rentals");
 });
 
 router.post('/', async(req, res) => {
