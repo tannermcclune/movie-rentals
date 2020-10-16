@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const { route } = require('./member');
 const router = express.Router();
 const {Genre,validateGenre,genreSchema} = require('../module/genre');
 const auth = require('../middleware/Auth');
