@@ -12,8 +12,8 @@ const express = require('express'),
     users = require('./routes/users'),
     login = require('./routes/login'),
     PORT = process.env.PORT || 3000,
-    URL = 'mongodb+srv://ethan:aa2121go@cluster0.3a6qy.gcp.mongodb.net/MovieRental?retryWrites=true&w=majority'
     config = require('config');
+require("dotenv").config();
 
 Joi.objectId = require('joi-objectid')(Joi);
 
@@ -22,8 +22,7 @@ if (!config.get('jwtPrivateKey')) {
     process.exit(1);
 }
 
-
-mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
     .then(() => console.log('connected to DB;'))
     .catch((error) => console.log(error));
 
@@ -49,4 +48,4 @@ router.use('/api/login', login);
 
 app.use("/", router);
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
