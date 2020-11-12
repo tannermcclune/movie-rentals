@@ -31,5 +31,13 @@ router.post('/', async (req, res) => {
     // console.log(user);
 });
 
+router.get('/create', async (req, res) => {
+    User.findOne
+});
+
+router.post("/create", async (req, res) => {
+    res.send(req.body);
+});
+
 
 module.exports = router;

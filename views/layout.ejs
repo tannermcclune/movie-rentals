@@ -3,9 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Frozen Yogurt Shop</title>
+	<title>Blockbuster 2.0</title>
 	
 	<link rel="stylesheet" type="text/css" href="/css/mobile.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom-styles.css">
 	<script src="/js/mobile.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,35 +14,35 @@
 </head>
 <body>
 	<div id="page">
-	<nav class="navbar navbar-default navbar-static-top">
+	<nav class="navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid" style="float: right">
 			<ul class="nav navbar-nav float-right">
 				<li class="selected">
 					<a href="/">Home</a>
 				</li>
 				<li class="menu">
-					<a href="/api/genres">Genres</a>
+					<a href="/genres">Genres</a>
 				</li>
 				<li class="menu">
-					<a href="/api/rentals">Rentals</a>
+					<a href="/rentals">Rentals</a>
 				</li>
 				<li class="menu">
-					<a href="/api/users">Users</a>
+					<a href="/users">Users</a>
 				</li>
 				<li class="menu">
-					<a href="/api/movies">Movies</a>
+					<a href="/movies">Movies</a>
 				</li>
 				<li>
-					<a href="/api/members">Members</a>
+					<a href="/members">Members</a>
 				</li>
 				<li>
-					<a href="/api/login">Log In</a>
+					<a href="/login">Log In</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
 		<div class="container"><%- body %></div>
 		
-		<p style="text-align: center">&copy; 2020 Blockbuster 2.0 All Rights Reserved. Go Aggies!</p>		
+		<p style="text-align: center; margin: 4vh" class="footer">&copy; 2020 Blockbuster 2.0 All Rights Reserved. Go Aggies!</p>		
 	</body>
 	</html>

@@ -39,12 +39,12 @@ router.use(
 
 
 router.use("/", index);
-router.use('/api/genres', genre);
-router.use('/api/members', members);
-router.use('/api/movies', movie);
-router.use('/api/rentals', rental);
-router.use('/api/users', users);
-router.use('/api/login', login);
+router.use('/genres', genre);
+router.use('/members', members);
+router.use('/movies', movie);
+router.use('/rentals', rental);
+router.use('/users', users);
+router.use('/login', login);
 
 app.use("/", router);
 

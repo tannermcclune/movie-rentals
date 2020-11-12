@@ -1,0 +1,32 @@
+<div class="data-form">
+    <form class="form-signin" action="/users/create" method="POST">
+      <h2 class="form-signin-heading">Sign Up</h2>
+    <div class="form-group">
+        <label for="inputName" >Name</label>
+        <input type="text" name="first" id="inputName" class="form-control" placeholder="Name" autofocus>
+    </div>
+    <div class="form-group">    
+      <label for="inputEmail">Email address</label>
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      </div>
+    <div class="form-group">
+      <label for="inputZipCode">Zip Code</label>
+      <input type="text" name="zipCode" id="inputZipCode" class="form-control" placeholder="Zip Code" required>
+    </div>
+    <% if (locals.currentUser) { %>
+        <% if (currentUser.isAdmin) { %>
+            <input id="chat-user-id" type="checkbox" value="">
+        <% } else { %>
+            <input id="chat-user-id" type="hidden" value=false %>">
+        <% } %>
+    <% } %>
+      <br />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+  </div>
+
+  <p style="padding-top: 3vh;">Already have an account? <a href="/login">Sign in</a></p>
