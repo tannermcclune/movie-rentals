@@ -1,4 +1,12 @@
-const { User } = require("../module/user");
+const User = require("../models/user"),
+    getUserParams = body => {
+        return {
+            userName: body.userName,
+            email: body.email,
+            password: body.password
+        };
+    };
+
 
 module.exports = {
     login: (req, res) => {
@@ -14,7 +22,7 @@ module.exports = {
         res.render("users/create")
     },
     createNew: (req, res, next) => {
-        let newUser = req.body;
+        let newUser = getUserParams(req.body);
         User.create(newUser, (error, user) => {
             if (error) {
                 console.log(error.message);
