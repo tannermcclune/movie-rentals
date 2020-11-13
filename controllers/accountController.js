@@ -80,7 +80,24 @@ module.exports = {
             res.locals.redirect = "/users/all";
             next();
           } catch (error) {
-              res.send(error.message);
+              req.flash("error", 'Could not update user');
+              res.locals.redirect = "/users/all";
+                next();
+          }
+      },
+      deleteUser: async (req, res, next) => {
+          let username = req.body.username;
+          let id = req.params.id;
+          try {
+            User.findByIdAndDelete(id).then();
+            console.log(req.params);
+            req.flash("success", `${username} deleted forever`);
+            res.locals.redirect = "/users/all";
+            next();
+          } catch (error) {
+              req.flash("error", `${username} could not be deleted`);
+              res.locals.redirect = `/users/${id}`;
+              next();
           }
       }
   };

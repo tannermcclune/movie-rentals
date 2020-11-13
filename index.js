@@ -85,6 +85,7 @@ router.get("/members", accountController.members);
 router.get("/users/:id", accountController.getUser);
 router.get("/users/:id/edit", accountController.editUser);
 router.post("/users/update", accountController.updateUser, accountController.redirect);
+router.post("/users/:id/delete", accountController.deleteUser, accountController.redirect);
 
 
 app.use("/", router);
