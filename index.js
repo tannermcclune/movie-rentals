@@ -80,6 +80,7 @@ router.get("/movies", movieController.moviesShow, movieController.movies);
 router.get("/users", accountController.users);
 router.get("/users/create", accountController.create);
 router.post("/users/create", accountController.createNew, accountController.redirect);
+router.get("/users/all", accountController.getAllUsers);
 router.get("/members", accountController.members);
 
 

@@ -1,9 +1,12 @@
 const User = require("../models/user"),
     getUserParams = body => {
         return {
-            userName: body.userName,
+            username: body.userName,
+            firstname: body.firstName,
+            lastname: body.lastName,
             email: body.email,
-            password: body.password
+            password: body.password,
+            isAdmin: body.isAdmin
         };
     };
 
@@ -33,12 +36,18 @@ module.exports = {
             } else {
                 res.locals.redirect = "/login";
                 res.locals.user = user;
-                req.flash("success", `User ${user.userName} created successfully!`);
+                req.flash("success", `User ${user.username} created successfully!`);
                 next();
             }
         });
       },
       redirect: (req, res) => {
           res.redirect(`${res.locals.redirect}`);
+      },
+      getAllUsers: async (req, res, next) => {
+          let data = await User.find().then(data => {
+              res.locals.users = data;
+              res.render("users/allUsers");
+          })
       }
   };
