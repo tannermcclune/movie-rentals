@@ -37,7 +37,7 @@ router.use(
     })
 )
 
-
+// Routes
 router.use("/", index);
 router.use('/genres', genre);
 router.use('/members', members);
