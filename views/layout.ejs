@@ -15,6 +15,9 @@
 <body>
 	<div id="page">
 	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Blockbuster 2.0</a>
+		  </div>
 		<div class="container-fluid" style="float: right">
 			<ul class="nav navbar-nav float-right">
 				<li class="selected">
@@ -41,6 +44,20 @@
 			</ul>
 		</div>
 	</nav>
+
+	<div class="flashes">
+		<% if (locals.flashMessages) { %>
+		<% if (flashMessages.success) { %>
+		<div class="flash success">
+			<%= flashMessages.success %>
+		</div>
+		<% } else if (flashMessages.error) { %>
+		<div class="flash error">
+			<%= flashMessages.error %>
+		</div>
+		<% } %>
+		<% } %>
+	</div>
 		<div class="container"><%- body %></div>
 		
 		<p style="text-align: center; margin: 4vh" class="footer">&copy; 2020 Blockbuster 2.0 All Rights Reserved. Go Aggies!</p>		

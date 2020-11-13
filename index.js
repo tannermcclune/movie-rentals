@@ -11,6 +11,8 @@ const express = require('express'),
     rental = require('./routes/rental'),
     users = require('./routes/users'),
     login = require('./routes/login'),
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash"),
     PORT = process.env.PORT || 3000,
     config = require('config');
 require("dotenv").config();
