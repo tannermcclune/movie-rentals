@@ -45,9 +45,42 @@ module.exports = {
           res.redirect(`${res.locals.redirect}`);
       },
       getAllUsers: async (req, res, next) => {
-          let data = await User.find().then(data => {
-              res.locals.users = data;
-              res.render("users/allUsers");
-          })
+          try {
+            let data = await User.find();
+            res.locals.users = data;
+            res.render("users/allUsers");
+          } catch (error) {
+              res.send(error.message);
+          }
+      },
+      getUser: async (req, res, next) => {
+          try {
+            let user = await User.findOne({_id: req.params.id});
+            res.locals.user = user;
+            res.render("users/singleUser");
+          } catch (error) {
+            res.send(error.message);
+          }
+      },
+      editUser: async (req, res, next) => {
+          try {
+            let id = req.params.id;
+            let user = await User.findById(id);
+            res.locals.user = user;
+            res.render("users/edit");
+          } catch (error) {
+              res.send(error.message);
+          }
+      },
+      updateUser: async (req, res, next) => {
+          let user = getUserParams(req.body);
+          try {
+            let updatedUser = await User.findByIdAndUpdate(req.body.id, user);
+            req.flash("success", `${user.username} was updated successfully!`);
+            res.locals.redirect = "/users/all";
+            next();
+          } catch (error) {
+              res.send(error.message);
+          }
       }
   };

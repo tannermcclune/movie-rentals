@@ -1,8 +1,14 @@
 <h1>Here's all of the users. You're welcome</h1>
-<table>
+<table class="table">
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Data</th>
+    </tr>
 <% users.forEach(user => {%>
     <tr>
-        <td><%= user.userName %></td>
+        <td><a href="/users/<%= user._id %>"><%= user.username %></a></td>
         <td><%= user.email %></td>
         <td><%= user.password %></td>
         <td><%= user %></td>

@@ -35,6 +35,11 @@ const userSchema = new Schema(
       unique: true,
       max: [55]
     },
+    password: {
+      type: String,
+      required: true,
+      min: 5
+    },
 
     myMovies: {
       type: Array

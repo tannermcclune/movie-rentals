@@ -46,7 +46,7 @@ router.use((req, res, next) => {
 })
 
 // Database configuration
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true})
     .then(() => console.log('connected to DB;'))
     .catch((error) => console.log(error));
 
@@ -82,6 +82,9 @@ router.get("/users/create", accountController.create);
 router.post("/users/create", accountController.createNew, accountController.redirect);
 router.get("/users/all", accountController.getAllUsers);
 router.get("/members", accountController.members);
+router.get("/users/:id", accountController.getUser);
+router.get("/users/:id/edit", accountController.editUser);
+router.post("/users/update", accountController.updateUser, accountController.redirect);
 
 
 app.use("/", router);
