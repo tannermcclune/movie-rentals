@@ -76,7 +76,17 @@ router.get("/", homeController.index);
 router.get("/login", accountController.login);
 router.get("/genres", movieController.genres);
 router.get("/rentals", movieController.rentals);
-router.get("/movies", movieController.moviesShow, movieController.movies);
+
+// MOVIES
+router.get("/movies", movieController.movies);
+router.get("/movies/new", movieController.new);
+router.post("/movies/create", movieController.createNew, movieController.redirect);
+router.get("/movies/:id", movieController.getMovie);
+router.get("/movies/:id/edit", movieController.edit);
+router.post("/movies/:id/update", movieController.updateMovie, movieController.redirect);
+router.post("/movies/:id/delete", movieController.deleteMovie, movieController.redirect);
+
+// USERS
 router.get("/users", accountController.users);
 router.get("/users/create", accountController.create);
 router.post("/users/create", accountController.createNew, accountController.redirect);

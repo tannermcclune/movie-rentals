@@ -31,8 +31,12 @@ const movieSchema = new Schema(
     },
 
     runtime: {
-        type: Date,
+        type: Number,
         required: true
+    },
+    price: {
+      type: Number,
+      require: true
     }
   }
 );
