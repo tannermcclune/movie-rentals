@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div id="page">
-	<nav class="navbar navbar-inverse navbar-static-top">
+	<nav class="navbar navbar-inverse navbar-static-top">\
 		<div class="container">
 			<a class="navbar-brand" href="/" style="padding: 10px;">
 				<img src="/images/logo.png" width="40%">
@@ -44,6 +44,20 @@
 			</ul>
 		</div>
 	</nav>
+
+	<div class="flashes">
+		<% if (locals.flashMessages) { %>
+		<% if (flashMessages.success) { %>
+		<div class="flash success">
+			<%= flashMessages.success %>
+		</div>
+		<% } else if (flashMessages.error) { %>
+		<div class="flash error">
+			<%= flashMessages.error %>
+		</div>
+		<% } %>
+		<% } %>
+	</div>
 		<div class="container"><%- body %></div>
 		
 		<p style="text-align: center; margin: 4vh" class="footer">&copy; 2020 Blockbuster 2.0 All Rights Reserved. Go Aggies!</p>		

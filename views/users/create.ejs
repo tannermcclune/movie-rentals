@@ -3,7 +3,7 @@
       <h2 class="form-signin-heading">Sign Up</h2>
     <div class="form-group">
         <label for="inputName" >User Name</label>
-        <input type="text" name="username" id="inputName" class="form-control" placeholder="User Name" autofocus>
+        <input type="text" name="username" id="inputName" minlength="5" class="form-control" placeholder="User Name" autofocus>
     </div>
     <div class="form-group">    
       <label for="inputEmail">Email address</label>
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" id="inputPassword" minlength="5" class="form-control" placeholder="Password" required>
       </div>
     <% if (locals.currentUser) { %>
         <% if (currentUser.isAdmin) { %>

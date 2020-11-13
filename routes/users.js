@@ -32,11 +32,19 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/create', async (req, res) => {
-    User.findOne
+    res.render("users/create");
 });
 
 router.post("/create", async (req, res) => {
-    res.send(req.body);
+    let newUser = req.body;
+    console.log(newUser);
+   User.create(newUser, (error, user) => {
+       if (error) {res.send(error.message)}
+       else {
+        res.flash("success", `User ${newUser.userName} created successfully`)
+        res.render("usres/show");
+       }
+   });
 });
 
 
