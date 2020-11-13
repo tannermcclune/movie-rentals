@@ -4,16 +4,20 @@ const express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
     Joi = require('joi'),
-    index = require('./routes/index'),
-    genre = require('./routes/genre'),
-    members = require('./routes/member'),
-    movie = require('./routes/movie'),
-    rental = require('./routes/rental'),
-    users = require('./routes/users'),
-    login = require('./routes/login'),
+    //OLD IMPORTS for ROUTES
+    // index = require('./routes/index'),
+    // genre = require('./routes/genre'),
+    // members = require('./routes/member'),
+    // movie = require('./routes/movie'),
+    // rental = require('./routes/rental'),
+    // users = require('./routes/users'),
+    // login = require('./routes/login'),
+    homeController = require('./controllers/homeController'),
+    movieController = require('./controllers/movieController'),
+    accountController = require('./controllers/accountController'),
     PORT = process.env.PORT || 3000,
     config = require('config');
-require("dotenv").config();
+    require("dotenv").config();
 
 Joi.objectId = require('joi-objectid')(Joi);
 
@@ -37,14 +41,26 @@ router.use(
     })
 )
 
-// Routes
-router.use("/", index);
-router.use('/genres', genre);
-router.use('/members', members);
-router.use('/movies', movie);
-router.use('/rentals', rental);
-router.use('/users', users);
-router.use('/login', login);
+// OLD ROUTES
+// router.use("/", index);
+// router.use('/genres', genre);
+// router.use('/members', members);
+// router.use('/movies', movie);
+// router.use('/rentals', rental);
+// router.use('/users', users);
+// router.use('/login', login);
+
+// NEW ROUTES
+router.get("/", homeController.index);
+router.get("/login", accountController.login);
+router.get("/genres", movieController.genres);
+router.get("/rentals", movieController.rentals);
+router.get("/movies", movieController.movies);
+router.get("/users", accountController.users);
+router.get("/users/create", accountController.create);
+router.post("/users/new", accountController.createNew);
+router.get("/members", accountController.members);
+
 
 app.use("/", router);
 

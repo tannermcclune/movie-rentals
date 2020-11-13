@@ -2,8 +2,8 @@
     <form class="form-signin" action="/users/create" method="POST">
       <h2 class="form-signin-heading">Sign Up</h2>
     <div class="form-group">
-        <label for="inputName" >Name</label>
-        <input type="text" name="first" id="inputName" class="form-control" placeholder="Name" autofocus>
+        <label for="inputName" >User Name</label>
+        <input type="text" name="username" id="inputName" class="form-control" placeholder="User Name" autofocus>
     </div>
     <div class="form-group">    
       <label for="inputEmail">Email address</label>
@@ -13,10 +13,6 @@
         <label for="inputPassword">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
       </div>
-    <div class="form-group">
-      <label for="inputZipCode">Zip Code</label>
-      <input type="text" name="zipCode" id="inputZipCode" class="form-control" placeholder="Zip Code" required>
-    </div>
     <% if (locals.currentUser) { %>
         <% if (currentUser.isAdmin) { %>
             <input id="chat-user-id" type="checkbox" value="">
