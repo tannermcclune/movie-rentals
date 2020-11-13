@@ -55,7 +55,7 @@ router.get("/", homeController.index);
 router.get("/login", accountController.login);
 router.get("/genres", movieController.genres);
 router.get("/rentals", movieController.rentals);
-router.get("/movies", movieController.movies);
+router.get("/movies", movieController.moviesShow, movieController.movies);
 router.get("/users", accountController.users);
 router.get("/users/create", accountController.create);
 router.post("/users/new", accountController.createNew);

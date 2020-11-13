@@ -1,3 +1,10 @@
+const User = require("../models/user"),
+    getUserParams = body => {
+        return {
+            //add what we need to return from creating a new user
+        };
+    };
+
 module.exports = {
     login: (req, res) => {
         res.render("login/show")
