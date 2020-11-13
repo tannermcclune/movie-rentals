@@ -49,11 +49,11 @@
 		<% if (locals.flashMessages) { %>
 		<% if (flashMessages.success) { %>
 		<div class="flash success">
-			<%= flashMessages.success %>
+			<h1 style="color: green"><%= flashMessages.success %></h1>
 		</div>
-		<% } else if (flashMessages.error) { %>
+			<% } else if (flashMessages.error) { %>
 		<div class="flash error">
-			<%= flashMessages.error %>
+			<h1 style="color: red"><%= flashMessages.error %></h1>
 		</div>
 		<% } %>
 		<% } %>
