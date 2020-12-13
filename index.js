@@ -85,13 +85,13 @@ router.get("/movies/:id", movieController.getMovie);
 router.get("/movies/:id/edit", movieController.edit);
 router.post("/movies/:id/update", movieController.updateMovie, movieController.redirect);
 router.post("/movies/:id/delete", movieController.deleteMovie, movieController.redirect);
+router.post("/movies/search", movieController.searchMovies);
 
 // USERS
-router.get("/users", accountController.users);
+router.get("/users", accountController.getAllUsers);
 router.get("/users/create", accountController.create);
 router.post("/users/create", accountController.createNew, accountController.redirect);
 router.get("/users/all", accountController.getAllUsers);
-router.get("/members", accountController.members);
 router.get("/users/:id", accountController.getUser);
 router.get("/users/:id/edit", accountController.editUser);
 router.post("/users/update", accountController.updateUser, accountController.redirect);

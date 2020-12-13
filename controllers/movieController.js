@@ -119,5 +119,22 @@ module.exports = {
         res.locals.redirect = `/movies/${id}`;
         next();
       });
+    },
+
+    searchMovies: async (req, res, next) => {
+      let phrase = req.body.search;
+      let query = { $text: {$search: "Children" }};
+    
+      
+
+      try {
+        let indexes = await Movie.listIndexes();
+        console.log(indexes);
+        let moviesMatched = await Movie.find(query);
+        res.send(moviesMatched);
+      } catch (error) {
+        console.log("ERROR");
+        res.send(error);
+      }
     }
   };

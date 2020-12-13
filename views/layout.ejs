@@ -24,23 +24,29 @@
 					<a href="/">Home</a>
 				</li>
 				<li class="menu">
-					<a href="/genres">Genres</a>
+					<a href="/rentals">My Rentals</a>
 				</li>
-				<li class="menu">
-					<a href="/rentals">Rentals</a>
-				</li>
-				<li class="menu">
-					<a href="/users">Users</a>
-				</li>
+				<% if (locals.currentUser !== undefined) { %>
+					<% if (currentUser.isAdmin) { %>
+					<li class="menu">
+						<a href="/users">Users</a>
+					</li>
+					<% } %>
+				<% } %>
+
 				<li class="menu">
 					<a href="/movies">Movies</a>
 				</li>
 				<li>
-					<a href="/members">Members</a>
-				</li>
-				<li>
-					<a href="/login">Log In</a>
-				</li>
+					<% if (!locals.currentUser) { %>
+						<li>
+							<a href="/login">Log In</a>
+						</li>
+					<% } else { %>
+						<li>
+							<a><%= locals.currentUser.name %></a>
+						</li>
+					<% } %>
 			</ul>
 		</div>
 	</nav>

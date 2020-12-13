@@ -27,6 +27,8 @@ const movieSchema = new mongoose.Schema({
     }
 });
 
+movieSchema.index({ title: 'text'});
+
 const Movie = mongoose.model('Movies', movieSchema);
 
 function validateMovie(movie) {
