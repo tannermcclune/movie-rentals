@@ -88,6 +88,32 @@ router.get("/users/:id/edit", accountController.editUser);
 router.post("/users/update", accountController.updateUser, accountController.redirect);
 router.post("/users/:id/delete", accountController.deleteUser, accountController.redirect);
 
+// // FINAL ROUTING
+// // Landing Functions
+// router.get("/");
+// router.get("/login");
+// router.get("/register");
+
+// // Movie Functions
+// router.get("/movies");
+// router.get("/movies/:id");
+// router.get("/purchases");
+// router.get("/purchases/:id");
+
+// // Transaction Functions
+// router.get("/checkout/:id");
+// router.get("/transactions");
+
+// // Profile Functions
+// router.get("/profile");
+// router.get("/profile/edit/:id");
+
+// // Admin Functions
+// router.get("/admin/transactions");
+// router.get("/admin/movies");
+// router.get("/admin/movies/:id");
+// router.get("/admin/users");
+// router.get("/admin/users/edit/:id");
 
 app.use("/", router);
 
