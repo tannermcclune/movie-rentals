@@ -1,121 +1,97 @@
+const passport = require('passport');
+
 const express = require('express'),
-    layouts = require("express-ejs-layouts"),
-    router = express.Router(),
-    app = express(),
-    mongoose = require('mongoose'),
-    Joi = require('joi'),
-    //OLD IMPORTS for ROUTES
-    // index = require('./routes/index'),
-    // genre = require('./routes/genre'),
-    // members = require('./routes/member'),
-    // movie = require('./routes/movie'),
-    // rental = require('./routes/rental'),
-    // users = require('./routes/users'),
-    // login = require('./routes/login'),
-    expressSession = require("express-session"),
-    connectFlash = require('connect-flash'),
-    homeController = require('./controllers/homeController'),
-    movieController = require('./controllers/movieController'),
-    accountController = require('./controllers/accountController'),
-    transactionController = require('./controllers/transactionController'),
-    PORT = process.env.PORT || 3000,
-    config = require('config');
-    require("dotenv").config();
+  layouts = require('express-ejs-layouts'),
+  router = express.Router(),
+  app = express(),
+  mongoose = require('mongoose'),
+  expressSession = require('express-session'),
+  connectFlash = require('connect-flash'),
+  cookieParser = require('cookie-parser'),
+  homeController = require('./controllers/homeController'),
+  movieController = require('./controllers/movieController'),
+  userController = require('./controllers/userController'),
+  movieStockController = require('./controllers/movieStockControllers');
+passportConfig = require('./config/auth');
+PORT = process.env.PORT || 3000;
 
-
-// Authentication that Yixin started making
-Joi.objectId = require('joi-objectid')(Joi);
-if (!config.get('jwtPrivateKey')) {
-    console.log('FATAL ERROR: jwtPrivateKey is not defined.');
-    process.exit(1);
-}
-
-// Getting Flash messages set up
-router.use(expressSession({
-    secret: "blockbuster_secret_code",
-    cookie: {
-        maxAge: 300000
-    },
-    resave: false,
-    saveUninitialized: false
-}));
-router.use(connectFlash());
-
-router.use((req, res, next) => {
-    res.locals.flashMessages = req.flash();
-    next();
-})
+require('dotenv').config();
 
 // Database configuration
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true})
-    .then(() => console.log('connected to DB;'))
-    .catch((error) => console.log(error));
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+  })
+  .then(() => console.log('connected to DB;'))
+  .catch((error) => console.log(error));
 
-// Some Express stuff
+//config
 router.use(express.json());
-app.set("port", process.env.PORT || 3000);
-app.set("view engine", "ejs");
+app.set('port', process.env.PORT || 3000);
+app.set('view engine', 'ejs');
 router.use(layouts);
-router.use(express.static("public"));
+router.use(express.static('public'));
 router.use(
-    express.urlencoded({
-        extended: false
-    })
-)
+  express.urlencoded({
+    extended: false,
+  })
+);
+router.use(cookieParser('blockbuster_secret_code'));
+router.use(connectFlash());
+router.use(
+  expressSession({
+    secret: 'blockbuster_secret_code',
+    cookie: {
+      maxAge: 300000,
+    },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+//passport Middleware
+router.use(passport.initialize());
+router.use(passport.session());
+//passport config
+passportConfig(passport);
+//Global vars
+router.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  res.locals.currentUser = req.user;
+  console.log(req.user);
+  next();
+});
 
-// NEW ROUTES
-router.get("/", homeController.index);
-router.get("/login", accountController.login);
-router.get("/genres", movieController.genres);
-router.get("/rentals", movieController.rentals);
+//Home Route
+router.get('/', homeController.index);
+// router.get('/login', accountController.login);
 
+//MovieStock
+router.get(
+  '/movieStock/add/:id',
+  movieController.getApiMovie,
+  movieStockController.showAdd
+);
+router.post('/movieStock/post', movieStockController.addStock);
 // MOVIES
-router.get("/movies", movieController.movies);
-router.get("/movies/new", movieController.new);
-router.post("/movies/create", movieController.createNew, movieController.redirect);
-router.get("/movies/:id", movieController.getMovie);
-router.get("/movies/:id/edit", movieController.edit);
-router.post("/movies/:id/update", movieController.updateMovie, movieController.redirect);
-router.post("/movies/:id/delete", movieController.deleteMovie, movieController.redirect);
-router.post("/movies/search", movieController.searchMovies);
-
+router.get(
+  '/movies/show',
+  movieController.getApiMovie,
+  movieController.getMovie
+);
+router.get(
+  '/movies/singleTrendingNow/:id',
+  movieController.getApiMovie,
+  movieController.getSingleTrending
+);
 // USERS
-router.get("/users", accountController.getAllUsers);
-router.get("/users/create", accountController.create);
-router.post("/users/create", accountController.createNew, accountController.redirect);
-router.get("/users/all", accountController.getAllUsers);
-router.get("/users/:id", accountController.getUser);
-router.get("/users/:id/edit", accountController.editUser);
-router.post("/users/update", accountController.updateUser, accountController.redirect);
-router.post("/users/:id/delete", accountController.deleteUser, accountController.redirect);
+router.get('/users/login', userController.showLogin);
+router.get('/users/register', userController.showRegister);
+router.post('/users/register', userController.registeUser);
+router.post('/users/login', userController.userLogin);
 
-// // FINAL ROUTING
-// // Landing Functions
-// router.get("/");
-// router.get("/login");
-// router.get("/register");
-
-// // Movie Functions
-// router.get("/movies");
-// router.get("/movies/:id");
-// router.get("/purchases");
-// router.get("/purchases/:id");
-
-// // Transaction Functions
-// router.get("/checkout/:id");
-// router.get("/transactions");
-
-// // Profile Functions
-// router.get("/profile");
-// router.get("/profile/edit/:id");
-
-// // Admin Functions
-// router.get("/admin/transactions");
-// router.get("/admin/movies");
-// router.get("/admin/movies/:id");
-// router.get("/admin/users");
-// router.get("/admin/users/edit/:id");
-
-app.use("/", router);
+app.use('/', router);
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

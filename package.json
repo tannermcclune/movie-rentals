@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set movieRental_jwtPrivateKey=securityKey && node index.js"
+    "start": " nodemon index.js"
   },
   "author": "Blockbuster 2.0",
   "license": "ISC",
@@ -26,7 +26,9 @@
     "lodash": "^4.17.20",
     "mongodb": "^3.6.3",
     "mongoose": "^5.10.13",
-    "mpath": "^0.7.0"
+    "mpath": "^0.7.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "express-ejs-layouts": "^2.5.0"

@@ -1,140 +1,69 @@
-const { update } = require("../models/movie");
+const APIKEY = '2292c0a68349f95400f7059f9a33b936';
+const axios = require('axios');
+const instance = axios.create({
+  baseURL: 'https://api.themoviedb.org/3',
+});
+const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
-const Movie = require("../models/movie"),
-   axios = require("axios").default,
-  getMovieParams = body => {
-    return {
-        title: body.title,
-        director: body.director,
-        description: body.description,
-        genre: body.genre,
-        runtime: body.runtime,
-        price: body.price
-    };
-  };
+const requests = {
+  fetchTrending: `/trending/all/week?api_key=${APIKEY}&language=en-US`,
+  fetchOriginals: `/discover/tv?api_key=${APIKEY}&with_networks=213`,
+  fetchTopRated: `/movie/top_rated?api_key=${APIKEY}&language=en-US`,
+  fetchActionMovies: `/discover/movie?api_key=${APIKEY}&with_genres=28`,
+  fetchComedyMovies: `/discover/movie?api_key=${APIKEY}&with_genres=35`,
+  fetchHorrorMovies: `/discover/movie?api_key=${APIKEY}&with_genres=27`,
+  fetchRomanceMovies: `/discover/movie?api_key=${APIKEY}&with_genres=10749`,
+  fetchDocumentaries: `/discover/movie?api_key=${APIKEY}&with_genres=99`,
+};
 
 module.exports = {
-    genres: (req, res) => {
-      res.render("genres/show");
-    },
-
-    rentals: (req, res) => {
-      res.render("rentals/rentals");
-    },
-
-    moviesShow: async (req, res) => {
-      // let movies = await Movie.
-      res.locals.movies = movies;
-      res.render("movies/show");
-    },
-
-    movies: (req, res, next) => {
-      Movie.find()
-      .then(movies => {
-        res.locals.movies = movies;
-        res.render("movies/show");
-      })
-      .catch(error => {
-        req.flash("error", "Couldn't get movies");
-        console.log("Can't get movies!")
-        next(error);
-      });
-    },
-
-    new: async (req, res, next) => {
-      res.render("movies/newMovie");
-    },
-
-    redirect: (req, res) => {
-      res.redirect(res.locals.redirect);
-    },
-
-    createNew: async (req, res, next) => {
-      let newMovie = getMovieParams(req.body);
-      try {
-        Movie.create(newMovie);
-        req.flash("success", `Movie "${newMovie.title}" created successfully!`);
-        res.locals.redirect = '/movies';
-        next();
-      } catch (error) {
-        req.flash("error", "There was an error creating the movie");
-        console.log(error.message);
-        res.locals.redirect = '/movies/new';
-      }
-    },
-
-    getMovie: async (req, res, next) => {
-      let id = req.params.id;
-      try {
-        let movie = await Movie.findById(id);
-        res.locals.movie = movie;
-        let image = await (await axios.get('https://dog.ceo/api/breeds/image/random')).data.message;
-        res.locals.image = image;
-        res.render("movies/singleMovie");
-      } catch (error) {
-        req.flash("error", "There was an error getting the movie");
-        res.redirect("/movies");
-      }
-    },
-
-    edit: async (req, res) => {
-      let id = req.params.id;
-      try {
-        let movie = await Movie.findById(id);
-        res.locals.movie = movie;
-        res.render("movies/edit");
-      } catch (error) {
-        req.flash("error", "couldn't find the movie");
-        console.log(error.message);
-        res.redirect(`/movies/${id}`);
-      }
-    },
-
-    updateMovie: async (req, res, next) => {
-      let id = req.params.id;
-      let updatedMovie = getMovieParams(req.body);
-      try {
-        let movie = await Movie.findByIdAndUpdate(id, updatedMovie).then();
-        req.flash("success", `${movie.title} updated successfully!`);
-        res.locals.redirect = `/movies/${id}`;
-        next();
-      } catch (error) {
-        req.flash("error", "Couldn't update the movie");
-        console.log(error.message);
-        res.redirect(`/movies/${id}`);
-        next();
-      }
-    },
-    deleteMovie: (req, res, next) => {
-      let id = req.params.id;
-      let title = req.body.title;
-      Movie.deleteOne({_id: id}).then(thing => {
-        req.flash("success", `${title} successfully deleted!`);
-        res.locals.redirect = '/movies';
-        next();
-      })
-      .catch(error => {
-        console.log(error.message);
-        req.flash("error", "Error occurred, could not delete movie");
-        res.locals.redirect = `/movies/${id}`;
-        next();
-      });
-    },
-
-    searchMovies: async (req, res, next) => {
-      let phrase = req.body.search;
-      let query = { $text: {$search: "Children" }};
-    
-      
-
-      try {
-        let indexes = await Movie.listIndexes();
-        console.log(indexes);
-        let moviesMatched = await Movie.find(query);
-        res.send(moviesMatched);
-      } catch (error) {
-        console.log("ERROR");
-        res.send(error);
-      }
-    }
-  };
+  getApiMovie: async (req, res, next) => {
+    const trendingRequest = await instance.get(requests.fetchTrending);
+    const topRatedRequest = await instance.get(requests.fetchTopRated);
+    const actionRequest = await instance.get(requests.fetchActionMovies);
+    const comedyRequest = await instance.get(requests.fetchComedyMovies);
+    const horrorRequest = await instance.get(requests.fetchHorrorMovies);
+    const romanceRequest = await instance.get(requests.fetchRomanceMovies);
+    const trendingMovies = trendingRequest.data.results;
+    const topRatedMovies = topRatedRequest.data.results;
+    const actionMovies = actionRequest.data.results;
+    const comedyMovies = comedyRequest.data.results;
+    const horrorMovies = horrorRequest.data.results;
+    const romanceMovies = romanceRequest.data.results;
+    res.locals.trendingMovies = trendingMovies;
+    res.locals.topRatedMovies = topRatedMovies;
+    res.locals.actionMovies = actionMovies;
+    res.locals.comedyMovies = comedyMovies;
+    res.locals.horrorMovies = horrorMovies;
+    res.locals.romanceMovies = romanceMovies;
+    // console.log(res.locals.movies);
+    next();
+  },
+  getMovie: (req, res, next) => {
+    const {
+      trendingMovies,
+      topRatedMovies,
+      actionMovies,
+      comedyMovies,
+      horrorMovies,
+      romanceMovies,
+    } = res.locals;
+    // console.log(trendingMovies[0]);
+    res.render('movies/show', {
+      trendingMovies: trendingMovies,
+      topRatedMovies: topRatedMovies,
+      actionMovies: actionMovies,
+      comedyMovies: comedyMovies,
+      baseUrl: baseUrl,
+    });
+  },
+  getSingleTrending: (req, res, next) => {
+    const movies = res.locals.trendingMovies;
+    const id = req.params.id;
+    const movie = movies.filter((m) => m.id == id);
+    res.render('movies/singleMovie.ejs', {
+      baseUrl: baseUrl,
+      movie: movie[0],
+    });
+  },
+};

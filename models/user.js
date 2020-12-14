@@ -1,54 +1,42 @@
-"use strict";
+const mongoose = require('mongoose');
+const Joi = require('joi');
 
-const mongoose = require("mongoose"),
-  { Schema } = require("mongoose");
-
-const userSchema = new Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      max: [30]
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  data: {
+    type: Date,
+    default: Date.now,
+  },
+  myMovie: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'movie',
     },
+  ],
+});
 
-    isAdmin: {
-      type: Boolean,
-      required: true
-    },
+const User = mongoose.model('user', userSchema);
 
-    firstname: {
-      type: String,
-      required: true,
-      max: [30]
-    },
+const userVlidate = (user) => {
+  const schema = Joi.object({
+    name: Joi.string().min(5).required(),
+    email: Joi.string().min(10).required().email(),
+    password: Joi.string().min(1).required(),
+    password2: Joi.ref('password'),
+  });
+  return schema.validate(user);
+};
 
-    lastname: {
-      type: String,
-      required: true,
-      max: [30]
-    },
-
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      max: [55]
-    },
-    password: {
-      type: String,
-      required: true,
-      min: 5
-    },
-
-    myMovies: {
-      type: Array
-    },
-
-    myFriends: {
-      type: Array
-    }
-  }
-);
-
-module.exports = mongoose.model("user", userSchema);
+module.exports.User = User;
+module.exports.userVlidate = userVlidate;
