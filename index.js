@@ -115,6 +115,7 @@ router.get(
 // USERS
 router.get('/users/login', userController.showLogin);
 router.get('/users/register', userController.showRegister);
+router.get('/users/logout', userController.userLogout);
 router.post('/users/register', userController.registeUser);
 router.post('/users/login', userController.userLogin);
 

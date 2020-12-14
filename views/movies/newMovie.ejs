@@ -47,8 +47,8 @@
       <label for="runtime">Language</label>
       <input
         type="text"
-        name="Language"
-        id="Language"
+        name="language"
+        id="language"
         class="form-control"
         value="<%= movie.original_language %>"
       />
@@ -61,7 +61,7 @@
         name="imageURL"
         id="imageURL"
         class="form-control"
-        value="<%= movie.original_language %>"
+        value="<%=`${baseUrl}${movie.poster_path}`%>"
       />
     </div>
 
