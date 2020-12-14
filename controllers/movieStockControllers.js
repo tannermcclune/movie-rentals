@@ -1,5 +1,6 @@
 const { MovieStock } = require('../models/movieStock');
 const _ = require('lodash');
+const baseUrl = 'https://image.tmdb.org/t/p/original/';
 
 module.exports = {
   showAdd: (req, res, next) => {

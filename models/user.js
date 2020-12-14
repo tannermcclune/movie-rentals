@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
   },
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('users', userSchema);
 
 const userVlidate = (user) => {
   const schema = Joi.object({

@@ -37,7 +37,7 @@ module.exports = {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         let user = new User({
-          name: name,
+          username: name,
           email: email,
           password: hashedPassword,
         });
@@ -46,7 +46,7 @@ module.exports = {
           req.flash('success', 'You are now registered!');
           res.redirect('/users/login');
         } catch (error) {
-          console.log(error.message);
+          console.log('This is error message :' + error.message);
         }
       }
     }
@@ -58,5 +58,11 @@ module.exports = {
       failureRedirect: '/users/login',
       failureFlash: true,
     })(req, res, next);
+  },
+
+  userLogout: (req, res, next) => {
+    req.logOut();
+    req.flash('success', 'Logged out');
+    res.redirect('/users/login');
   },
 };

@@ -15,7 +15,9 @@ const passportConfig = (passport) => {
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch)
-              return done(null, user, { message: `Logged in as ${user.name}` });
+              return done(null, user, {
+                message: `Logged in as ${user.username}`,
+              });
             done(null, false, { message: 'Password not match' });
           });
         })
