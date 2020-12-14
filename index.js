@@ -62,15 +62,6 @@ router.use(
     })
 )
 
-// OLD ROUTES
-// router.use("/", index);
-// router.use('/genres', genre);
-// router.use('/members', members);
-// router.use('/movies', movie);
-// router.use('/rentals', rental);
-// router.use('/users', users);
-// router.use('/login', login);
-
 // NEW ROUTES
 router.get("/", homeController.index);
 router.get("/login", accountController.login);
