@@ -17,6 +17,7 @@ const express = require('express'),
     homeController = require('./controllers/homeController'),
     movieController = require('./controllers/movieController'),
     accountController = require('./controllers/accountController'),
+    transactionController = require('./controllers/transactionController'),
     PORT = process.env.PORT || 3000,
     config = require('config');
     require("dotenv").config();
