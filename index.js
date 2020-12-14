@@ -1,4 +1,30 @@
+<<<<<<< HEAD
 const passport = require('passport');
+=======
+const express = require('express'),
+    layouts = require("express-ejs-layouts"),
+    router = express.Router(),
+    app = express(),
+    mongoose = require('mongoose'),
+    Joi = require('joi'),
+    //OLD IMPORTS for ROUTES
+    // index = require('./routes/index'),
+    // genre = require('./routes/genre'),
+    // members = require('./routes/member'),
+    // movie = require('./routes/movie'),
+    // rental = require('./routes/rental'),
+    // users = require('./routes/users'),
+    // login = require('./routes/login'),
+    expressSession = require("express-session"),
+    connectFlash = require('connect-flash'),
+    homeController = require('./controllers/homeController'),
+    movieController = require('./controllers/movieController'),
+    accountController = require('./controllers/accountController'),
+    PORT = process.env.PORT || 3000,
+    config = require('config');
+    require("dotenv").config();
+
+>>>>>>> parent of fb957e7... made tweaks to index.ejs and added transactionController to controllers and index.js
 
 const express = require('express'),
   layouts = require('express-ejs-layouts'),
